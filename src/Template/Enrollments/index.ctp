@@ -4,26 +4,20 @@
  * @var \App\Model\Entity\Enrollment[]|\Cake\Collection\CollectionInterface $enrollments
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Enrollment'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Subjects'), ['controller' => 'Subjects', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Subject'), ['controller' => 'Subjects', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="enrollments index large-9 medium-8 columns content">
-    <h3><?= __('Matrícula') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+
+<div class="enrollments index large-9 medium-8 main">
+    <h3><?= __('Matricula') ?></h3>
+    <?= $this->Html->link('Nueva matrícula',['action'=>'add'],['class'=>'btn btn-info float-right'])?>
+    <br>
+    <br>
+    <table class="table table-striped" id="Enrollments-grid" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('enrollments_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('grade') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('student_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('subject_id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th scope="col">Id de matricula</th>
+                <th scope="col">Nota </th>
+                <th scope="col">Id del estudiante</th>
+                <th scope="col">Nombre del curso</th>
+                <th scope="col" class="actions"><?= __('Acciones') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -34,22 +28,35 @@
                 <td><?= $enrollment->has('student') ? $this->Html->link($enrollment->student->students_id, ['controller' => 'Students', 'action' => 'view', $enrollment->student->students_id]) : '' ?></td>
                 <td><?= $enrollment->has('subject') ? $this->Html->link($enrollment->subject->title, ['controller' => 'Subjects', 'action' => 'view', $enrollment->subject->subjects_id]) : '' ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $enrollment->enrollments_id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $enrollment->enrollments_id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $enrollment->enrollments_id], ['confirm' => __('Are you sure you want to delete # {0}?', $enrollment->enrollments_id)]) ?>
+                    <?= $this->Html->link(__('<span class="typcn typcn-document"></span>'), ['action' => 'view', $enrollment->enrollments_id],['escape'=>false,'style'=>'font-size:22px;']) ?>
+                    <?= $this->Html->link(__('<span class="typcn typcn-pen"></span>'), ['action' => 'edit', $enrollment->enrollments_id],['escape'=>false,'style'=>'font-size:22px;']) ?>
+                    <?= $this->Form->postLink(__('<span class="typcn typcn-trash"></span>'), ['action' => 'delete', $enrollment->enrollments_id], ['confirm' => __('Por favor confirme si desea eliminar la matrícula nº {0}', $enrollment->enrollments_id),'style'=>'font-size:22px;','escape'=>false]) ?>
                 </td>
-            </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready( function () {
+        $('#Enrollments-grid').DataTable(
+          {
+            /** Configuración del DataTable para cambiar el idioma, se puede personalisar aun más **/
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ filas por página",
+                "zeroRecords": "Sin resultados",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin datos disponibles",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "sSearch": "Buscar:",
+                "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
+            }
+          }
+        );
+    } );
+</script>

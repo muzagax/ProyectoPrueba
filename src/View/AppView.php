@@ -12,8 +12,9 @@
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace App\View;
-
+use BootstrapUI\View\UIViewTrait;
 use Cake\View\View;
+
 
 /**
  * Application View
@@ -24,7 +25,7 @@ use Cake\View\View;
  */
 class AppView extends View
 {
-
+    use UIViewTrait;
     /**
      * Initialization hook method.
      *
@@ -36,5 +37,8 @@ class AppView extends View
      */
     public function initialize()
     {
+        //render the initializeUI method from the UIViewTrait
+        $this->initializeUI(['layout' => false]);
+     
     }
 }

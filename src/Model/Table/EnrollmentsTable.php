@@ -65,7 +65,8 @@ class EnrollmentsTable extends Table
             ->lessThanOrEqual('grade', 9.99, 'El valor debe ser menor a 9.99 .')
             ->greaterThanOrEqual('grade', 4.00, 'El valor debe ser mayor a 4.0 .')
             ->allowEmpty('grade');
-
+        /*debug($validator);
+        die();*/
         return $validator;
     }
 
