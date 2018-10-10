@@ -51,7 +51,11 @@ class EnrollmentsController extends AppController
      */
     public function add()
     {
-        $enrollment = $this->Enrollments->newEntity();
+
+      $e= $this->Enrollments->ejemplo();
+      $this->Flash->error(__('The enrollment has been saved.'));
+
+      $enrollment = $this->Enrollments->newEntity();
         if ($this->request->is('post')) {
             $enrollment = $this->Enrollments->patchEntity($enrollment, $this->request->getData());
             if ($this->Enrollments->save($enrollment)) {

@@ -84,4 +84,23 @@ class EnrollmentsTable extends Table
 
         return $rules;
     }
+
+    public function ejemplo()
+    {
+        $Query= $this->find('all')
+                    ->join(
+                            [
+                                'students'=>[
+                                             'table'=>'students',
+                                             'type'=>'left',
+                                             'conditions'=>'students.students_id = Enrollments.student_id'
+                                            ]
+                            ]
+                          )
+                    ->toList();
+
+
+        //debug($Query);
+        return $Query;
+    }
 }
